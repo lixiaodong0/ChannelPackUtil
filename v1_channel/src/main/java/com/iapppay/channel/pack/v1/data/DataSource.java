@@ -18,7 +18,7 @@ public class DataSource {
     //渠道名称  一个或者多个
     private List<String> channelNames;
     //渠道标识符
-    private String channelFlag = "channel_";
+    private String channelFlag = "ia1";
 
     public static final DataSource getInstance() {
         if (INSTANCE == null) {

@@ -22,8 +22,8 @@ public class ChannelMainPage extends JFrame {
 
     private void initView() {
         JTabbedPane jTabbedPane = new JTabbedPane();
-        jTabbedPane.add("打渠道", null);
-        jTabbedPane.add("读渠道", null);
+        jTabbedPane.add("打渠道", WriteChannelPage.getInstance());
+        jTabbedPane.add("读渠道", ReadChannelPage.getInstance());
         jTabbedPane.add("关于", AboutChannelPage.getInstance());
         //设置标题
         setTitle("渠道打包工具");

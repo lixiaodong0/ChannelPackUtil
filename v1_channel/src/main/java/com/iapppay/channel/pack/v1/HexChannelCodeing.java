@@ -1,4 +1,6 @@
-package com.iapppay.channel.pack.v1.interfaces;
+package com.iapppay.channel.pack.v1;
+
+import com.iapppay.channel.pack.v1.interfaces.ChannelCoding;
 
 /**
  * 十六进制渠道编码

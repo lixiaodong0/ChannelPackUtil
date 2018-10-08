@@ -7,6 +7,7 @@ import java.awt.Font;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 /**
  * 关于页面
@@ -21,10 +22,11 @@ public class AboutChannelPage extends JPanel {
     }
 
     private void initView() {
-        setBounds(0, 0, Config.WIDTH, Config.HEIGHT);
+        setLayout(new BorderLayout());
         JLabel jLabel = new JLabel();
-        jLabel.setText("Github: https://github.com/lixiaodong0");
+        jLabel.setText(Config.COMPANY_INFO);
         jLabel.setFont(new Font(null, Font.PLAIN, 25));
+        jLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(jLabel, BorderLayout.CENTER);
     }
 
