@@ -5,6 +5,7 @@ import com.iapppay.channel.pack.v1.config.WindowConfig;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -26,6 +27,7 @@ public class ChannelMainPage extends JFrame {
         jTabbedPane.add(PageConfig.WritePage.TITLE, WriteChannelPage.getInstance());
         jTabbedPane.add(PageConfig.ReadPage.TITLE, ReadChannelPage.getInstance());
         jTabbedPane.add(PageConfig.AboutPage.TITLE, AboutChannelPage.getInstance());
+        jTabbedPane.setFont(new Font("黑体", Font.PLAIN, 16));
         //设置标题
         setTitle(WindowConfig.TITLE);
         //默认布局为BorderLayout，这里让JTabbedPane居中显示

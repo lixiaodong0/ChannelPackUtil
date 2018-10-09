@@ -25,7 +25,7 @@ public class AboutChannelPage extends JPanel {
         setLayout(new BorderLayout());
         JLabel jLabel = new JLabel();
         jLabel.setText(PageConfig.AboutPage.COMPANY_INFO);
-        jLabel.setFont(new Font(null, Font.PLAIN, 20));
+        jLabel.setFont(new Font("黑体", Font.PLAIN, 20));
         jLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(jLabel, BorderLayout.CENTER);
     }
