@@ -1,6 +1,6 @@
 package com.iapppay.channel.pack.v1.util;
 
-import com.iapppay.channel.pack.v1.config.Config;
+import com.iapppay.channel.pack.v1.config.PageConfig;
 
 import java.awt.Toolkit;
 
@@ -16,7 +16,7 @@ public class DialogUtil {
 
 
     public static void showDialog(String msg) {
-        showDialog(Config.DIALOG_TITLE, msg);
+        showDialog(PageConfig.Dialog.TITLE, msg);
     }
 
     public static void showDialog(String title, String msg) {

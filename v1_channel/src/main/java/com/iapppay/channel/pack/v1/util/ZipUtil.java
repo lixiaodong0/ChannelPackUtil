@@ -39,29 +39,6 @@ public class ZipUtil {
      * @return
      */
     public void markZip(File fromFile, File toFile, String channelName, ResultCallback<File> resultCallback) {
-        if (resultCallback == null) {
-            Log.v("回调参数不能为空！");
-            return;
-        }
-        if (toFile == null) {
-            Log.v("copy zip file fail, to file not null");
-            resultCallback.onError("目标文件不能为空！");
-            return;
-        }
-
-
-        if (fromFile == null) {
-            Log.v("copy zip file fail, from file not null");
-            resultCallback.onError("源文件不能为空！");
-            return;
-        }
-
-        if (!fromFile.exists()) {
-            Log.v("copy zip file fail, from file not exists");
-            resultCallback.onError("源文件不存在！");
-            return;
-        }
-
         try {
             ZipInputStream zis = new ZipInputStream(new FileInputStream(fromFile));
             ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(toFile));
@@ -95,8 +72,6 @@ public class ZipUtil {
         } catch (IOException e) {
             e.printStackTrace();
             resultCallback.onError("IO异常!");
-        } finally {
-
         }
     }
 

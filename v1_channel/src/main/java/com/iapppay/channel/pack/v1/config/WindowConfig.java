@@ -1,0 +1,21 @@
+package com.iapppay.channel.pack.v1.config;
+
+/**
+ * 窗口配置
+ */
+public interface WindowConfig {
+    /**
+     * 宽度
+     */
+    int WIDTH = 400;
+    /**
+     * 高度
+     */
+    int HEIGHT = 300;
+
+    /**
+     * 窗口标题
+     */
+    String TITLE = "V1_渠道打包工具";
+
+}

@@ -11,7 +11,7 @@ import javax.swing.text.PlainDocument;
 
 public class LetterNumberDocument extends PlainDocument {
 
-    private static final String REG = "^[A-Za-z0-9]+$";
+    public static final String REG = "^[A-Za-z0-9]+$";
 
     @Override
     public void insertString(int offs, String str, AttributeSet a) throws BadLocationException {

@@ -1,21 +1,26 @@
 package com.iapppay.channel.pack.v1.ui;
 
 import com.iapppay.channel.pack.v1.ChannelUtil;
+import com.iapppay.channel.pack.v1.config.MarkPropertiesConfig;
+import com.iapppay.channel.pack.v1.config.PageConfig;
+import com.iapppay.channel.pack.v1.config.StringsConfig;
 import com.iapppay.channel.pack.v1.data.DataSource;
 import com.iapppay.channel.pack.v1.interfaces.ResultCallback;
+import com.iapppay.channel.pack.v1.util.ChannelPropertiesUtil;
 import com.iapppay.channel.pack.v1.util.DialogUtil;
 import com.iapppay.channel.pack.v1.util.LetterNumberDocument;
 import com.iapppay.channel.pack.v1.util.TextUtil;
-import com.iapppay.channel.pack.v1.util.WaitDialog;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,11 +64,11 @@ public class WriteChannelPage extends JPanel {
 
     //apk文件选择器 选中的文件
     private File apkSelectedFile;
-    private WaitDialog waitDialog;
+    //渠道配置文件选择器 选中的文件
+    private File propertiesSelectedFile;
 
 
     private WriteChannelPage() {
-        //        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setLayout(new GridBagLayout());
         initView();
         initEvent();
@@ -100,6 +105,7 @@ public class WriteChannelPage extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                showPropertiesFileChooser();
             }
         });
 
@@ -108,22 +114,20 @@ public class WriteChannelPage extends JPanel {
             public void actionPerformed(ActionEvent e) {
 
                 if (apkSelectedFile == null) {
-                    DialogUtil.showDialog("请先选择APK路径");
+                    DialogUtil.showDialog(StringsConfig.FAIL.APK_PATH_FAIL);
                     return;
                 }
-
-
-                List<String> channelNames = new ArrayList<String>();
                 if (DataSource.getInstance().isMoreChannel()) {
-
+                    ChannelPropertiesUtil.getInstance().getChannelMark(propertiesSelectedFile == null ? "" : propertiesSelectedFile.getAbsolutePath(), new ChannelPropertiesCallback());
                 } else {
+                    List<String> channelNames = new ArrayList<String>();
                     String channelMark = etMark.getText();
                     if (!TextUtil.isEmpty(channelMark)) {
                         channelNames.add(channelMark);
                         DataSource.getInstance().setChannelNames(channelNames);
                         outMark();
                     } else {
-                        DialogUtil.showDialog("请输入或配置渠道标识符");
+                        DialogUtil.showDialog(StringsConfig.FAIL.SINGLE_CHANNEL_MARK_FAIL);
                     }
                 }
             }
@@ -131,9 +135,22 @@ public class WriteChannelPage extends JPanel {
     }
 
 
+    private class ChannelPropertiesCallback implements ResultCallback<List<String>> {
+
+        @Override
+        public void onSuccess(List<String> data) {
+            DataSource.getInstance().setChannelNames(data);
+            outMark();
+        }
+
+        @Override
+        public void onError(String errorMsg) {
+            DialogUtil.showDialog(errorMsg);
+        }
+    }
+
+
     private void outMark() {
-        waitDialog = new WaitDialog(this, "打标中.....");
-        waitDialog.setVisible(true);
         ChannelUtil.getInstance().packTask(new PackResultCallback());
     }
 
@@ -142,29 +159,27 @@ public class WriteChannelPage extends JPanel {
         @Override
         public void onSuccess(List<File> data) {
             StringBuilder builder = new StringBuilder();
+            builder.append(StringsConfig.SUCCESS.PACK_SUCCESS);
+            builder.append("\n");
             if (data.size() == 1) {
-                builder.append("打包成功");
+                builder.append(StringsConfig.SUCCESS.CHANNEL_MARK).append(DataSource.getInstance().getChannelNames().get(0));
                 builder.append("\n");
-                builder.append("渠道标识：").append(DataSource.getInstance().getChannelNames().get(0));
-                builder.append("\n");
-                builder.append("Apk路径： ").append(data.get(0).getAbsoluteFile());
             } else {
-
+                builder.append(StringsConfig.SUCCESS.CHANNEL_MARK);
+                builder.append("\n");
+                List<String> channelNames = DataSource.getInstance().getChannelNames();
+                for (int count = channelNames.size(), i = 0; i < count; i++) {
+                    builder.append("" + (i + 1) + "." + channelNames.get(i));
+                    builder.append("\n");
+                }
             }
+            builder.append(StringsConfig.SUCCESS.APK_PATH).append(data.get(0).getParent());
             DialogUtil.showDialog(builder.toString());
-
-            if (waitDialog != null) {
-                waitDialog.setVisible(false);
-            }
         }
 
         @Override
         public void onError(String errorMsg) {
             DialogUtil.showDialog(errorMsg);
-
-            if (waitDialog != null) {
-                waitDialog.setVisible(false);
-            }
         }
     }
 
@@ -177,15 +192,16 @@ public class WriteChannelPage extends JPanel {
         JPanel apkFileContainer = new JPanel();
         apkFileContainer.setLayout(new FlowLayout(FlowLayout.CENTER));
         etApkPath = new JTextField(20);
-        btnApkSelect = new JButton("选择Apk路径");
+        etApkPath.setEnabled(false);
+        btnApkSelect = new JButton(PageConfig.WritePage.SELECT_APK_PATH);
         apkFileContainer.add(etApkPath);
         apkFileContainer.add(btnApkSelect);
         add(apkFileContainer, gridBagConstraints);
 
         JPanel modeContainer = new JPanel();
         modeContainer.setLayout(new FlowLayout(FlowLayout.CENTER));
-        btnSingle = new JRadioButton("单渠道", true);
-        btnMore = new JRadioButton("多渠道");
+        btnSingle = new JRadioButton(PageConfig.WritePage.SINGLE_CHANNEL, true);
+        btnMore = new JRadioButton(PageConfig.WritePage.MORE_CHANNEL);
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.add(btnSingle);
         buttonGroup.add(btnMore);
@@ -203,7 +219,7 @@ public class WriteChannelPage extends JPanel {
         channelInfoContainer.add(moreChannelLayout);
         add(channelInfoContainer, gridBagConstraints);
 
-        btnWrite = new JButton("打标");
+        btnWrite = new JButton(PageConfig.WritePage.OUT_MARK);
         add(btnWrite, gridBagConstraints);
     }
 
@@ -226,7 +242,7 @@ public class WriteChannelPage extends JPanel {
         JPanel hintLayout = new JPanel();
         hintLayout.setLayout(new FlowLayout(FlowLayout.LEFT));
         JLabel jLabel = new JLabel();
-        jLabel.setText("标识符只能输入字母+数字");
+        jLabel.setText(PageConfig.WritePage.SINGLE_HINT_INFO);
         jLabel.setForeground(Color.RED);
         jLabel.setHorizontalAlignment(SwingConstants.LEFT);
         hintLayout.add(jLabel);
@@ -234,7 +250,7 @@ public class WriteChannelPage extends JPanel {
 
         JPanel inputLayout = new JPanel();
         inputLayout.setLayout(new FlowLayout(FlowLayout.LEFT));
-        JLabel flag = new JLabel("渠道标识符:");
+        JLabel flag = new JLabel(PageConfig.WritePage.CHNNEL_MARK_TITLE);
         etMark = new JTextField(20);
         etMark.setDocument(new LetterNumberDocument());
         inputLayout.add(flag);
@@ -250,7 +266,7 @@ public class WriteChannelPage extends JPanel {
         JPanel hintLayout = new JPanel();
         hintLayout.setLayout(new FlowLayout(FlowLayout.LEFT));
         JLabel jLabel = new JLabel();
-        jLabel.setText("如果提示拒绝访问，可以手动填写文件路径");
+        jLabel.setText(PageConfig.WritePage.MORE_HINT_INFO);
         jLabel.setForeground(Color.RED);
         jLabel.setHorizontalAlignment(SwingConstants.LEFT);
         hintLayout.add(jLabel);
@@ -259,7 +275,7 @@ public class WriteChannelPage extends JPanel {
         JPanel inputLayout = new JPanel();
         inputLayout.setLayout(new FlowLayout(FlowLayout.LEFT));
         etConfigPath = new JTextField(20);
-        btnChannelConfig = new JButton("渠道配置文件");
+        btnChannelConfig = new JButton(PageConfig.WritePage.CHANNEL_PROPERTIES_TITLE);
         inputLayout.add(etConfigPath);
         inputLayout.add(btnChannelConfig);
         moreLayout.add(inputLayout);
@@ -274,11 +290,42 @@ public class WriteChannelPage extends JPanel {
         JFileChooser jFileChooser = new JFileChooser();
         jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         //设置文件过滤器
-        jFileChooser.setFileFilter(new FileNameExtensionFilter("apk文件", "apk"));
-        jFileChooser.showDialog(new JLabel(), "选择");
+        jFileChooser.setFileFilter(new FileNameExtensionFilter(PageConfig.FileChooser.APK_FILTER_DESCRIPTION, PageConfig.FileChooser.APK_FILTER_RGE));
+        jFileChooser.showDialog(new JLabel(), PageConfig.FileChooser.SELECT);
         apkSelectedFile = jFileChooser.getSelectedFile();
         if (apkSelectedFile != null) {
             etApkPath.setText(apkSelectedFile.getAbsolutePath());
+        }
+    }
+
+    /**
+     * 显示渠道配置文件选择器
+     */
+    private void showPropertiesFileChooser() {
+        JFileChooser jFileChooser = new JFileChooser();
+        jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        //设置文件过滤器
+        jFileChooser.setFileFilter(new FileNameExtensionFilter(MarkPropertiesConfig.MARK_FILTER_DESCRIPTION, MarkPropertiesConfig.MARK_FILTER_RGE));
+        jFileChooser.showDialog(new JLabel(), PageConfig.FileChooser.SELECT);
+
+        File selectedFile = jFileChooser.getSelectedFile();
+        if (selectedFile != null) {
+            propertiesSelectedFile = selectedFile;
+            etConfigPath.setText(propertiesSelectedFile.getAbsolutePath());
+
+            openFile(propertiesSelectedFile);
+        }
+    }
+
+    /**
+     * 打开文件
+     */
+    private void openFile(File file) {
+        try {
+            Desktop.getDesktop().open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            DialogUtil.showDialog(StringsConfig.FAIL.OPEN_FILE_FAIL);
         }
     }
 }

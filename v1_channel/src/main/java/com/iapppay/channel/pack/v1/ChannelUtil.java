@@ -1,6 +1,7 @@
 package com.iapppay.channel.pack.v1;
 
-import com.iapppay.channel.pack.v1.config.Config;
+import com.iapppay.channel.pack.v1.config.Constant;
+import com.iapppay.channel.pack.v1.config.StringsConfig;
 import com.iapppay.channel.pack.v1.data.DataSource;
 import com.iapppay.channel.pack.v1.interfaces.ChannelCoding;
 import com.iapppay.channel.pack.v1.interfaces.ResultCallback;
@@ -80,20 +81,20 @@ public class ChannelUtil implements ChannelCoding {
                 ZipEntry zipEntry = entries.nextElement();
                 String name = zipEntry.getName();
                 //判断文件是不是渠道文件
-                if (name.startsWith(Config.META_INF + DataSource.getInstance().getChannelFlag())) {
+                if (name.startsWith(Constant.META_INF + DataSource.getInstance().getChannelFlag())) {
                     channelFileName = name;
                     break;
                 }
             }
             if (!TextUtil.isEmpty(channelFileName)) {
                 //截取渠道号
-                String channelStr = channelFileName.substring((Config.META_INF + DataSource.getInstance().getChannelFlag()).length());
+                String channelStr = channelFileName.substring((Constant.META_INF + DataSource.getInstance().getChannelFlag()).length());
                 //解码
                 String decode = decode(channelStr);
-                callback.onSuccess("渠道号：" + decode);
+                callback.onSuccess(StringsConfig.SUCCESS.CHANNEL_MARK + decode);
             } else {
                 //渠道文件不存在，证明该APK没有打过渠道号
-                callback.onError("读取失败，该apk尚未打渠道号");
+                callback.onError(StringsConfig.FAIL.NOT_FOUND_CHANNEL_MARK);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -111,18 +112,18 @@ public class ChannelUtil implements ChannelCoding {
         DataSource dataSource = DataSource.getInstance();
         File fromFile = dataSource.getFromFile();
         if (!(fromFile != null && fromFile.exists())) {
-            return "源文件不存在或是空的";
+            return StringsConfig.FAIL.ZIP_FILE_NOT_NULL;
         }
         List<String> channelName = dataSource.getChannelNames();
         if (DataSource.getInstance().isMoreChannel()) {
             for (String str : channelName) {
                 if (TextUtil.isEmpty(str)) {
-                    return "渠道标识符不能为空";
+                    return StringsConfig.FAIL.CHANNEL_MARK_NOT_NULL;
                 }
             }
         } else {
             if (TextUtil.isEmpty(channelName.get(0))) {
-                return "渠道标识符不能为空";
+                return StringsConfig.FAIL.CHANNEL_MARK_NOT_NULL;
             }
         }
         return failInfo;
@@ -180,7 +181,7 @@ public class ChannelUtil implements ChannelCoding {
         if (failChannelList.isEmpty()) {
             callback.onSuccess(successChannelList);
         } else {
-            callback.onError("多渠道打包失败，请联系技术人员");
+            callback.onError(StringsConfig.FAIL.MORE_CHANNEL_PACL_FAIL);
         }
     }
 
@@ -197,7 +198,7 @@ public class ChannelUtil implements ChannelCoding {
         //渠道apk
         File toFile = new File(fromFile.getParent(), toFileNameBuilder.toString());
         //渠道文件名称 = (META_INF/)+ (渠道标识符) + encode(渠道名称)
-        String channelFileName = Config.META_INF + dataSource.getChannelFlag() + encode(channelName);
+        String channelFileName = Constant.META_INF + dataSource.getChannelFlag() + encode(channelName);
         ZipUtil.getInstance().markZip(fromFile, toFile, channelFileName, callback);
     }
 }

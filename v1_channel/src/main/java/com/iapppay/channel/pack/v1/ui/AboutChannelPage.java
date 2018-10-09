@@ -1,6 +1,6 @@
 package com.iapppay.channel.pack.v1.ui;
 
-import com.iapppay.channel.pack.v1.config.Config;
+import com.iapppay.channel.pack.v1.config.PageConfig;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -24,8 +24,8 @@ public class AboutChannelPage extends JPanel {
     private void initView() {
         setLayout(new BorderLayout());
         JLabel jLabel = new JLabel();
-        jLabel.setText(Config.COMPANY_INFO);
-        jLabel.setFont(new Font(null, Font.PLAIN, 25));
+        jLabel.setText(PageConfig.AboutPage.COMPANY_INFO);
+        jLabel.setFont(new Font(null, Font.PLAIN, 20));
         jLabel.setHorizontalAlignment(SwingConstants.CENTER);
         add(jLabel, BorderLayout.CENTER);
     }

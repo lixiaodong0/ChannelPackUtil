@@ -1,15 +1,17 @@
 package com.iapppay.channel.pack.v1.ui;
 
 import com.iapppay.channel.pack.v1.ChannelUtil;
+import com.iapppay.channel.pack.v1.config.PageConfig;
+import com.iapppay.channel.pack.v1.config.StringsConfig;
 import com.iapppay.channel.pack.v1.interfaces.ResultCallback;
 import com.iapppay.channel.pack.v1.util.DialogUtil;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -34,7 +36,7 @@ public class ReadChannelPage extends JPanel {
     private File selectedFile;
 
     private ReadChannelPage() {
-        setLayout(new GridBagLayout());
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         initView();
         initEvent();
     }
@@ -64,32 +66,32 @@ public class ReadChannelPage extends JPanel {
                         }
                     });
                 } else {
-                    DialogUtil.showDialog("请先选择APK路径");
+                    DialogUtil.showDialog(StringsConfig.FAIL.APK_PATH_FAIL);
                 }
             }
         });
     }
 
     private void initView() {
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
-        gridBagConstraints.weightx = 1;
 
-        etPath = new JTextField(30);
-        etPath.setEditable(false);
-        gridBagConstraints.gridwidth = GridBagConstraints.RELATIVE;
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
-        add(etPath, gridBagConstraints);
+        //占位置
+        JPanel topLayout = new JPanel();
+        topLayout.setLayout(new FlowLayout(FlowLayout.CENTER));
+        add(topLayout);
 
-        btnSelectPath = new JButton("选择APK路径");
-        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = GridBagConstraints.BOTH;
-        add(btnSelectPath, gridBagConstraints);
-
-        btnRead = new JButton("读取");
-        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = GridBagConstraints.VERTICAL;
-        gridBagConstraints.anchor = GridBagConstraints.CENTER;
-        add(btnRead, gridBagConstraints);
+        JPanel centerLayout = new JPanel();
+        centerLayout.setLayout(new FlowLayout(FlowLayout.CENTER));
+        etPath = new JTextField(20);
+        etPath.setEnabled(false);
+        btnSelectPath = new JButton(PageConfig.ReadPage.SELECT_APK_PATH);
+        centerLayout.add(etPath);
+        centerLayout.add(btnSelectPath);
+        add(centerLayout);
+        JPanel bottomLayout = new JPanel();
+        bottomLayout.setLayout(new FlowLayout(FlowLayout.CENTER));
+        btnRead = new JButton(PageConfig.ReadPage.READ);
+        bottomLayout.add(btnRead);
+        add(bottomLayout);
     }
 
     public static ReadChannelPage getInstance() {
@@ -110,8 +112,8 @@ public class ReadChannelPage extends JPanel {
         JFileChooser jFileChooser = new JFileChooser();
         jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         //设置文件过滤器
-        jFileChooser.setFileFilter(new FileNameExtensionFilter("apk文件", "apk"));
-        jFileChooser.showDialog(new JLabel(), "选择");
+        jFileChooser.setFileFilter(new FileNameExtensionFilter(PageConfig.FileChooser.APK_FILTER_DESCRIPTION, PageConfig.FileChooser.APK_FILTER_RGE));
+        jFileChooser.showDialog(new JLabel(), PageConfig.FileChooser.SELECT);
         selectedFile = jFileChooser.getSelectedFile();
         if (selectedFile != null) {
             etPath.setText(selectedFile.getAbsolutePath());

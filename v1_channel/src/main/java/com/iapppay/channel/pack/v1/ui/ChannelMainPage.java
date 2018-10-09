@@ -1,6 +1,7 @@
 package com.iapppay.channel.pack.v1.ui;
 
-import com.iapppay.channel.pack.v1.config.Config;
+import com.iapppay.channel.pack.v1.config.PageConfig;
+import com.iapppay.channel.pack.v1.config.WindowConfig;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -22,15 +23,15 @@ public class ChannelMainPage extends JFrame {
 
     private void initView() {
         JTabbedPane jTabbedPane = new JTabbedPane();
-        jTabbedPane.add("打渠道", WriteChannelPage.getInstance());
-        jTabbedPane.add("读渠道", ReadChannelPage.getInstance());
-        jTabbedPane.add("关于", AboutChannelPage.getInstance());
+        jTabbedPane.add(PageConfig.WritePage.TITLE, WriteChannelPage.getInstance());
+        jTabbedPane.add(PageConfig.ReadPage.TITLE, ReadChannelPage.getInstance());
+        jTabbedPane.add(PageConfig.AboutPage.TITLE, AboutChannelPage.getInstance());
         //设置标题
-        setTitle("渠道打包工具");
+        setTitle(WindowConfig.TITLE);
         //默认布局为BorderLayout，这里让JTabbedPane居中显示
         add(jTabbedPane, BorderLayout.CENTER);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        setBounds(screenSize.width / 2 - Config.WIDTH / 2, screenSize.height / 2 - Config.HEIGHT / 2, Config.WIDTH, Config.HEIGHT);
+        setBounds(screenSize.width / 2 - WindowConfig.WIDTH / 2, screenSize.height / 2 - WindowConfig.HEIGHT / 2, WindowConfig.WIDTH, WindowConfig.HEIGHT);
         //可见
         setVisible(true);
         //退出关闭程序
