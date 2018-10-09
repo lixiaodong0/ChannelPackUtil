@@ -44,6 +44,8 @@ public interface PageConfig {
      */
     interface Dialog {
         String TITLE = "提示";
+
+        String PACK_LOADING = "打包中...";
     }
 
 

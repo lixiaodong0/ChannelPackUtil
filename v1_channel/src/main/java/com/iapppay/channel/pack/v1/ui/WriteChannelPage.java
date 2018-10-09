@@ -9,6 +9,7 @@ import com.iapppay.channel.pack.v1.interfaces.ResultCallback;
 import com.iapppay.channel.pack.v1.util.ChannelPropertiesUtil;
 import com.iapppay.channel.pack.v1.util.DialogUtil;
 import com.iapppay.channel.pack.v1.util.LetterNumberDocument;
+import com.iapppay.channel.pack.v1.util.LoadingDialog;
 import com.iapppay.channel.pack.v1.util.TextUtil;
 
 import java.awt.Color;
@@ -33,6 +34,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingWorker;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -112,14 +114,15 @@ public class WriteChannelPage extends JPanel {
         btnWrite.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 if (apkSelectedFile == null) {
                     DialogUtil.showDialog(StringsConfig.FAIL.APK_PATH_FAIL);
                     return;
                 }
                 if (DataSource.getInstance().isMoreChannel()) {
+                    LoadingDialog.getInstance().show();
                     ChannelPropertiesUtil.getInstance().getChannelMark(propertiesSelectedFile == null ? "" : propertiesSelectedFile.getAbsolutePath(), new ChannelPropertiesCallback());
                 } else {
+                    LoadingDialog.getInstance().show();
                     List<String> channelNames = new ArrayList<String>();
                     String channelMark = etMark.getText();
                     if (!TextUtil.isEmpty(channelMark)) {
@@ -146,18 +149,32 @@ public class WriteChannelPage extends JPanel {
         @Override
         public void onError(String errorMsg) {
             DialogUtil.showDialog(errorMsg);
+            btnWrite.setEnabled(true);
         }
     }
 
-
     private void outMark() {
-        ChannelUtil.getInstance().packTask(new PackResultCallback());
+        new SwingWorker() {
+            @Override
+            protected Object doInBackground() throws Exception {
+                btnWrite.setEnabled(false);
+                ChannelUtil.getInstance().packTask(new PackResultCallback());
+                return null;
+            }
+
+            @Override
+            protected void done() {
+                super.done();
+                btnWrite.setEnabled(true);
+            }
+        }.execute();
     }
 
     private class PackResultCallback implements ResultCallback<List<File>> {
 
         @Override
         public void onSuccess(List<File> data) {
+            LoadingDialog.getInstance().hide();
             StringBuilder builder = new StringBuilder();
             builder.append(StringsConfig.SUCCESS.PACK_SUCCESS);
             builder.append("\n");
@@ -175,11 +192,14 @@ public class WriteChannelPage extends JPanel {
             }
             builder.append(StringsConfig.SUCCESS.APK_PATH).append(data.get(0).getParent());
             DialogUtil.showDialog(builder.toString());
+            btnWrite.setEnabled(true);
         }
 
         @Override
         public void onError(String errorMsg) {
+            LoadingDialog.getInstance().hide();
             DialogUtil.showDialog(errorMsg);
+            btnWrite.setEnabled(true);
         }
     }
 
@@ -292,8 +312,9 @@ public class WriteChannelPage extends JPanel {
         //设置文件过滤器
         jFileChooser.setFileFilter(new FileNameExtensionFilter(PageConfig.FileChooser.APK_FILTER_DESCRIPTION, PageConfig.FileChooser.APK_FILTER_RGE));
         jFileChooser.showDialog(new JLabel(), PageConfig.FileChooser.SELECT);
-        apkSelectedFile = jFileChooser.getSelectedFile();
-        if (apkSelectedFile != null) {
+        File selectedFile = jFileChooser.getSelectedFile();
+        if (selectedFile != null) {
+            apkSelectedFile = selectedFile;
             etApkPath.setText(apkSelectedFile.getAbsolutePath());
         }
     }

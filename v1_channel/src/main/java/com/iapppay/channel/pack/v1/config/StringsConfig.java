@@ -26,6 +26,8 @@ public interface StringsConfig {
         String CHANNEL_MARK_NOT_NULL = "渠道标识符不能为空";
 
         String MORE_CHANNEL_PACL_FAIL = "多渠道打包失败，请联系技术人员";
+
+        String IMG_LOADING_FAIL="图片加载失败";
     }
 
 

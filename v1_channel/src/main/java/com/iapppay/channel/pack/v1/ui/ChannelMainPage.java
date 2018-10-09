@@ -2,6 +2,7 @@ package com.iapppay.channel.pack.v1.ui;
 
 import com.iapppay.channel.pack.v1.config.PageConfig;
 import com.iapppay.channel.pack.v1.config.WindowConfig;
+import com.iapppay.channel.pack.v1.util.LoadingDialog;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -19,6 +20,7 @@ public class ChannelMainPage extends JFrame {
     public static ChannelMainPage INSTANCE;
 
     private ChannelMainPage() {
+        LoadingDialog.getInstance().init(this);
         initView();
     }
 
@@ -38,6 +40,7 @@ public class ChannelMainPage extends JFrame {
         setVisible(true);
         //退出关闭程序
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+
     }
 
     public static ChannelMainPage getInstance() {
