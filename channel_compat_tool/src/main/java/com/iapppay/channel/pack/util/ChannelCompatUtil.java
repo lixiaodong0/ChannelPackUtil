@@ -75,12 +75,7 @@ public class ChannelCompatUtil {
             channel = channelInfo.getChannel();
         } else {
             //V2方式失败，尝试V1方式读取
-            try {
-                channel = com.iapppay.channel.v1.ChannelReader.get(apkFile);
-            } catch (IOException e) {
-                e.printStackTrace();
-                channel = "";
-            }
+            channel = com.iapppay.channel.v1.ChannelReader.get(apkFile);
         }
         return channel;
     }

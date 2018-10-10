@@ -16,7 +16,7 @@ public interface WindowConfig {
     /**
      * 窗口标题
      */
-    String TITLE = "V1_渠道打包工具";
+    String TITLE = "渠道打包工具(兼容V1_V2签名)";
 
 
     interface Dialog {

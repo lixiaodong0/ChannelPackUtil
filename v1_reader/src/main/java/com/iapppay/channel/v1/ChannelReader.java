@@ -22,21 +22,24 @@ public class ChannelReader {
      * @return 返回null, 没有找到渠道信息
      * @throws IOException
      */
-    public static String get(File apkFile) throws IOException {
-        ZipFile zipFile = new ZipFile(apkFile);
-        Enumeration<? extends ZipEntry> entries = zipFile.entries();
-        String channelFileName = "";
-        while (entries.hasMoreElements()) {
-            ZipEntry zipEntry = entries.nextElement();
-            if (zipEntry.getName().startsWith(Config.COMPLETE_CHANNEL_FILE_INITIALLY)) {
-                channelFileName = zipEntry.getName();
-                break;
-            }
-        }
-
+    public static String get(File apkFile) {
         String channel = null;
-        if (channelFileName.contains(Config.COMPLETE_CHANNEL_FILE_INITIALLY)) {
-            channel = channelFileName.substring(Config.COMPLETE_CHANNEL_FILE_INITIALLY.length());
+        try {
+            ZipFile zipFile = new ZipFile(apkFile);
+            Enumeration<? extends ZipEntry> entries = zipFile.entries();
+            String channelFileName = "";
+            while (entries.hasMoreElements()) {
+                ZipEntry zipEntry = entries.nextElement();
+                if (zipEntry.getName().startsWith(Config.COMPLETE_CHANNEL_FILE_INITIALLY)) {
+                    channelFileName = zipEntry.getName();
+                    break;
+                }
+            }
+            if (channelFileName.contains(Config.COMPLETE_CHANNEL_FILE_INITIALLY)) {
+                channel = channelFileName.substring(Config.COMPLETE_CHANNEL_FILE_INITIALLY.length());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         System.out.println("channel:" + channel);
         return channel;

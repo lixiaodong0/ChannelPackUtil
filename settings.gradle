@@ -1,1 +1,1 @@
-include ':compat_channel_tool', ':app', ':v2_writer', ':v2_reader', ':v1_reader', ':v1_writer'
+include ':channel_compat_tool', ':app', ':v2_writer', ':v2_reader', ':v1_reader', ':v1_writer', ':app_reader'

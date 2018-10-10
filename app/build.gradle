@@ -4,6 +4,25 @@ android {
     compileSdkVersion 26
     buildToolsVersion "27.0.3"
 
+    signingConfigs{
+        //V1打包方式
+        v1{
+            keyAlias 'q.1234'
+            keyPassword 'q.1234'
+            storeFile file('keystore.jks')
+            storePassword 'q.1234'
+            v1SigningEnabled true
+            v2SigningEnabled false
+        }
+        //V2打包方式
+        v2{
+            keyAlias 'q.1234'
+            keyPassword 'q.1234'
+            storeFile file('keystore.jks')
+            storePassword 'q.1234'
+        }
+    }
+
     defaultConfig {
         applicationId "com.iapppay.app"
         minSdkVersion 17
@@ -15,9 +34,15 @@ android {
 
     }
     buildTypes {
-        release {
+        v1 {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.v1
+        }
+        v2 {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.v2
         }
     }
 }
@@ -29,4 +54,5 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
+    compile project(':app_reader')
 }
