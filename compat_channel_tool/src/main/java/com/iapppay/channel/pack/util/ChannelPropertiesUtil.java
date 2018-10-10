@@ -1,8 +1,8 @@
-package com.iapppay.channel.pack.v1.util;
+package com.iapppay.channel.pack.util;
 
-import com.iapppay.channel.pack.v1.config.MarkPropertiesConfig;
-import com.iapppay.channel.pack.v1.config.StringsConfig;
-import com.iapppay.channel.pack.v1.interfaces.ResultCallback;
+import com.iapppay.channel.pack.config.MarkPropertiesConfig;
+import com.iapppay.channel.pack.config.StringsConfig;
+import com.iapppay.channel.pack.interfaces.ResultCallback;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

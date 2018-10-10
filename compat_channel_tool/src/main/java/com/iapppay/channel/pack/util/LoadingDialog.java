@@ -1,8 +1,8 @@
-package com.iapppay.channel.pack.v1.util;
+package com.iapppay.channel.pack.util;
 
-import com.iapppay.channel.pack.v1.config.PageConfig;
-import com.iapppay.channel.pack.v1.config.StringsConfig;
-import com.iapppay.channel.pack.v1.config.WindowConfig;
+import com.iapppay.channel.pack.config.PageConfig;
+import com.iapppay.channel.pack.config.StringsConfig;
+import com.iapppay.channel.pack.config.WindowConfig;
 
 import java.awt.Frame;
 import java.awt.GridLayout;

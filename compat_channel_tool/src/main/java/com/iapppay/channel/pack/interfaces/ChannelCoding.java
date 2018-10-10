@@ -1,4 +1,4 @@
-package com.iapppay.channel.pack.v1.interfaces;
+package com.iapppay.channel.pack.interfaces;
 
 /**
  * 渠道编码接口

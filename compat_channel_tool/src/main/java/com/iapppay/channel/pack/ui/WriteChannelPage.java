@@ -1,16 +1,16 @@
-package com.iapppay.channel.pack.v1.ui;
+package com.iapppay.channel.pack.ui;
 
-import com.iapppay.channel.pack.v1.ChannelUtil;
-import com.iapppay.channel.pack.v1.config.MarkPropertiesConfig;
-import com.iapppay.channel.pack.v1.config.PageConfig;
-import com.iapppay.channel.pack.v1.config.StringsConfig;
-import com.iapppay.channel.pack.v1.data.DataSource;
-import com.iapppay.channel.pack.v1.interfaces.ResultCallback;
-import com.iapppay.channel.pack.v1.util.ChannelPropertiesUtil;
-import com.iapppay.channel.pack.v1.util.DialogUtil;
-import com.iapppay.channel.pack.v1.util.LetterNumberDocument;
-import com.iapppay.channel.pack.v1.util.LoadingDialog;
-import com.iapppay.channel.pack.v1.util.TextUtil;
+import com.iapppay.channel.pack.ChannelUtil;
+import com.iapppay.channel.pack.config.MarkPropertiesConfig;
+import com.iapppay.channel.pack.config.PageConfig;
+import com.iapppay.channel.pack.config.StringsConfig;
+import com.iapppay.channel.pack.data.DataSource;
+import com.iapppay.channel.pack.interfaces.ResultCallback;
+import com.iapppay.channel.pack.util.ChannelPropertiesUtil;
+import com.iapppay.channel.pack.util.DialogUtil;
+import com.iapppay.channel.pack.util.LetterNumberDocument;
+import com.iapppay.channel.pack.util.LoadingDialog;
+import com.iapppay.channel.pack.util.TextUtil;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -186,9 +186,16 @@ public class WriteChannelPage extends JPanel {
                 builder.append("\n");
                 List<String> channelNames = DataSource.getInstance().getChannelNames();
                 for (int count = channelNames.size(), i = 0; i < count; i++) {
-                    builder.append("" + (i + 1) + "." + channelNames.get(i));
-                    builder.append("\n");
+                    builder.append("『")
+                            .append(channelNames.get(i))
+                            .append("』");
+                    if (i % 10 == 0 && i != 0) {
+                        builder.append("\n");
+                    } else {
+                        builder.append(" ");
+                    }
                 }
+                builder.append("\n");
             }
             builder.append(StringsConfig.SUCCESS.APK_PATH).append(data.get(0).getParent());
             DialogUtil.showDialog(builder.toString());

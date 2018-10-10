@@ -1,4 +1,4 @@
-package com.iapppay.channel.pack.v1.data;
+package com.iapppay.channel.pack.data;
 
 import java.io.File;
 import java.util.List;

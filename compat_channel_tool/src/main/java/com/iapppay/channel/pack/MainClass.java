@@ -1,6 +1,6 @@
-package com.iapppay.channel.pack.v1;
+package com.iapppay.channel.pack;
 
-import com.iapppay.channel.pack.v1.ui.ChannelMainPage;
+import com.iapppay.channel.pack.ui.ChannelMainPage;
 
 import java.awt.Font;
 

@@ -1,6 +1,6 @@
-package com.iapppay.channel.pack.v1.util;
+package com.iapppay.channel.pack.util;
 
-import com.iapppay.channel.pack.v1.config.PageConfig;
+import com.iapppay.channel.pack.config.PageConfig;
 
 import java.awt.Toolkit;
 

@@ -1,4 +1,4 @@
-package com.iapppay.channel.pack.v1.config;
+package com.iapppay.channel.pack.config;
 
 /**
  * 失败，成功提示语配置
@@ -13,7 +13,7 @@ public interface StringsConfig {
 
         String OPEN_FILE_FAIL = "打开.properties文件失败";
 
-        String NOT_FOUND_CHANNEL_MARK = "读取失败，该apk尚未打渠道号";
+        String NOT_FOUND_CHANNEL_MARK = "读取失败，未找到渠道标识符";
 
         String CREATE_CHANNEL_PROPERTIES_FAIL = "创建默认渠道配置文件失败";
 
@@ -27,11 +27,16 @@ public interface StringsConfig {
 
         String MORE_CHANNEL_PACL_FAIL = "多渠道打包失败，请联系技术人员";
 
-        String IMG_LOADING_FAIL="图片加载失败";
+        String IMG_LOADING_FAIL = "图片加载失败";
+
+        String COPY_APK_FAIL = "拷贝渠道Apk发生异常";
+
+        String OUT_CHANNEL_MARK_FAIL="输出渠道标识符失败";
     }
 
-
     interface SUCCESS {
+
+        String READ_SUCCESS = "读取成功";
 
         String PACK_SUCCESS = "打包成功";
 

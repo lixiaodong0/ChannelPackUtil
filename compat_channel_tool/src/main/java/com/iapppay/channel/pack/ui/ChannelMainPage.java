@@ -1,8 +1,8 @@
-package com.iapppay.channel.pack.v1.ui;
+package com.iapppay.channel.pack.ui;
 
-import com.iapppay.channel.pack.v1.config.PageConfig;
-import com.iapppay.channel.pack.v1.config.WindowConfig;
-import com.iapppay.channel.pack.v1.util.LoadingDialog;
+import com.iapppay.channel.pack.config.PageConfig;
+import com.iapppay.channel.pack.config.WindowConfig;
+import com.iapppay.channel.pack.util.LoadingDialog;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

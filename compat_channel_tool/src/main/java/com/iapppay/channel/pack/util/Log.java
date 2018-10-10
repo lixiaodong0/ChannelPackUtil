@@ -1,4 +1,4 @@
-package com.iapppay.channel.pack.v1.util;
+package com.iapppay.channel.pack.util;
 
 /**
  * Created by Administrator on 2018/9/30.

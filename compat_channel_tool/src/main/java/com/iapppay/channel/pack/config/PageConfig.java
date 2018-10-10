@@ -1,4 +1,4 @@
-package com.iapppay.channel.pack.v1.config;
+package com.iapppay.channel.pack.config;
 
 /**
  * 页面相关配置

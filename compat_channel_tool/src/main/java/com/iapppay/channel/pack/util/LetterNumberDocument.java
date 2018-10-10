@@ -1,4 +1,4 @@
-package com.iapppay.channel.pack.v1.util;
+package com.iapppay.channel.pack.util;
 
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;

@@ -1,10 +1,10 @@
-package com.iapppay.channel.pack.v1.ui;
+package com.iapppay.channel.pack.ui;
 
-import com.iapppay.channel.pack.v1.ChannelUtil;
-import com.iapppay.channel.pack.v1.config.PageConfig;
-import com.iapppay.channel.pack.v1.config.StringsConfig;
-import com.iapppay.channel.pack.v1.interfaces.ResultCallback;
-import com.iapppay.channel.pack.v1.util.DialogUtil;
+import com.iapppay.channel.pack.ChannelUtil;
+import com.iapppay.channel.pack.config.PageConfig;
+import com.iapppay.channel.pack.config.StringsConfig;
+import com.iapppay.channel.pack.interfaces.ResultCallback;
+import com.iapppay.channel.pack.util.DialogUtil;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -33,7 +33,7 @@ public class ReadChannelPage extends JPanel {
     //读取 按钮
     private JButton btnRead;
     //选中的File文件
-    private File selectedFile;
+    private File selectedApkFile;
 
     private ReadChannelPage() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -52,12 +52,15 @@ public class ReadChannelPage extends JPanel {
         btnRead.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (selectedFile != null) {
+                if (selectedApkFile != null) {
                     //操作逻辑
-                    ChannelUtil.getInstance().readChannel(selectedFile, new ResultCallback<String>() {
+                    ChannelUtil.getInstance().readChannel(selectedApkFile, new ResultCallback<String>() {
                         @Override
                         public void onSuccess(String data) {
-                            DialogUtil.showDialog(data);
+                            StringBuilder builder = new StringBuilder();
+                            builder.append(StringsConfig.SUCCESS.READ_SUCCESS).append("\n");
+                            builder.append(StringsConfig.SUCCESS.CHANNEL_MARK).append(data);
+                            DialogUtil.showDialog(builder.toString());
                         }
 
                         @Override
@@ -114,8 +117,9 @@ public class ReadChannelPage extends JPanel {
         //设置文件过滤器
         jFileChooser.setFileFilter(new FileNameExtensionFilter(PageConfig.FileChooser.APK_FILTER_DESCRIPTION, PageConfig.FileChooser.APK_FILTER_RGE));
         jFileChooser.showDialog(new JLabel(), PageConfig.FileChooser.SELECT);
-        selectedFile = jFileChooser.getSelectedFile();
+        File selectedFile = jFileChooser.getSelectedFile();
         if (selectedFile != null) {
+            selectedApkFile = selectedFile;
             etPath.setText(selectedFile.getAbsolutePath());
         }
     }
