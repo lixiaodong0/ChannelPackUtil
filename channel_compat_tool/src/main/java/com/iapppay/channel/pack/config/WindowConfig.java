@@ -23,11 +23,11 @@ public interface WindowConfig {
         /**
          * 宽度
          */
-        int WIDTH = 100;
+        int WIDTH = 120;
         /**
          * 高度
          */
-        int HEIGHT = 60;
+        int HEIGHT = 80;
     }
 
 }

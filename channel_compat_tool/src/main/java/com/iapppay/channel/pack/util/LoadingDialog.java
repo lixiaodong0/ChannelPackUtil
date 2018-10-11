@@ -64,12 +64,22 @@ public class LoadingDialog {
         }
     }
 
+    private URL getResource(String fileName) {
+        //在当前目录查找
+        URL resource = getClass().getResource(fileName);
+        if (resource == null) {
+            //在根目录查找
+            resource = getClass().getResource("/" + fileName);
+        }
+        return resource;
+    }
+
     private void initView(JDialog jDialog) {
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new GridLayout(2, 1));
         JLabel iconLabel = new JLabel();
         iconLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        URL resource = getClass().getResource("loading.gif");
+        URL resource = getResource("loading.gif");
         if (resource != null) {
             iconLabel.setIcon(new ImageIcon(resource));
         } else {
@@ -78,11 +88,6 @@ public class LoadingDialog {
         JLabel title = new JLabel();
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setText(PageConfig.Dialog.PACK_LOADING);
-        if (resource == null) {
-            updateRunable = new UpdateRunable(title);
-            Thread thread = new Thread(updateRunable);
-            thread.start();
-        }
         jPanel.add(iconLabel);
         jPanel.add(title);
         jDialog.add(jPanel);
@@ -93,6 +98,11 @@ public class LoadingDialog {
                 closeUpdateRunnable();
             }
         });
+        if (resource == null) {
+            updateRunable = new UpdateRunable(title);
+            Thread thread = new Thread(updateRunable);
+            thread.start();
+        }
     }
 
     private void closeUpdateRunnable() {
