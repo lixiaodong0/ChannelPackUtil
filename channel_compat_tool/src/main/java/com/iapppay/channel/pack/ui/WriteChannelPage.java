@@ -253,6 +253,9 @@ public class WriteChannelPage extends JPanel {
                 builder.append(second).append("秒");
             }
             timeStr = builder.toString();
+            if (TextUtil.isEmpty(timeStr)) {
+                timeStr = "0秒";
+            }
         } else {
             timeStr = "格式化时间错误";
         }

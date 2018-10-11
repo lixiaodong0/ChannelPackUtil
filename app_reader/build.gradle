@@ -24,3 +24,26 @@ dependencies {
     compile project(':v1_reader')
     compile project(':v2_reader')
 }
+task clearJar(type: Delete) {
+    delete 'build/libs/getChannel.jar'
+    delete 'libs/getChannel.jar'
+}
+//打包任务
+task makeJar(type: Jar) {
+    //指定生成的jar名
+    baseName 'getChannel'
+    //从哪里打包class文件
+    from('build/intermediates/classes/release')
+    // ..代表ChannelPackUtil这个目录
+    from('../v1_reader/build/classes/main')
+    from('../v2_reader/build/classes/main')
+    //打包到jar后的目录结构
+//    into('build/libs')
+    //去掉不需要打包的目录和文件
+    exclude('**/BuildConfig.class')
+    exclude('**/META-INF')
+}
+makeJar.dependsOn(clearJar, build)
+
+
+
