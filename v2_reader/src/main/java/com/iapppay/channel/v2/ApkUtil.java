@@ -29,7 +29,7 @@ final class ApkUtil {
     public static final int APK_SIGNATURE_SCHEME_V2_BLOCK_ID = 0x7109871a;
 
     // Our Channel Block ID
-    public static final int APK_CHANNEL_BLOCK_ID = 0x71777777;
+    public static final int APK_CHANNEL_BLOCK_ID = 0x69706179;
 
     public static final String DEFAULT_CHARSET = "UTF-8";
 

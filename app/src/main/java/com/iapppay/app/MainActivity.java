@@ -16,10 +16,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         tvChannelMark = (TextView) findViewById(R.id.tv_channel_mark);
     }
-
     public void getChannelMark(View v) {
         String channel = AppChannelReader.get(getApplicationContext());
         if (TextUtils.isEmpty(channel)) {
@@ -27,4 +25,5 @@ public class MainActivity extends AppCompatActivity {
         }
         tvChannelMark.setText(channel);
     }
+
 }

@@ -28,7 +28,7 @@ task clearJar(type: Delete) {
     delete 'build/libs/getChannel.jar'
     delete 'libs/getChannel.jar'
 }
-//打包任务
+//自定义Jar包任务
 task makeJar(type: Jar) {
     //指定生成的jar名
     baseName 'getChannel'
