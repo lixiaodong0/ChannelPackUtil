@@ -43,6 +43,10 @@ public class ChannelUtil {
             return;
         }
 
+        //更新本次APK签名方式
+        boolean v2Signature = ChannelCompatUtil.isV2Signature(DataSource.getInstance().getFromFile());
+        DataSource.getInstance().setV2Signature(v2Signature);
+
         if (moreChannel) {
             moreChannel(callback);
         } else {
@@ -172,5 +176,4 @@ public class ChannelUtil {
             callback.onError(StringsConfig.FAIL.COPY_APK_FAIL);
         }
     }
-
 }

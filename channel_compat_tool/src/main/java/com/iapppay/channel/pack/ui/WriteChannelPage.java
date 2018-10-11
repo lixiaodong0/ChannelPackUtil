@@ -69,6 +69,8 @@ public class WriteChannelPage extends JPanel {
     //渠道配置文件选择器 选中的文件
     private File propertiesSelectedFile;
 
+    //统计打包时间
+    private long startPackTime;
 
     private WriteChannelPage() {
         setLayout(new GridBagLayout());
@@ -154,6 +156,7 @@ public class WriteChannelPage extends JPanel {
     }
 
     private void outMark() {
+        startPackTime = System.currentTimeMillis();
         new SwingWorker() {
             @Override
             protected Object doInBackground() throws Exception {
@@ -174,6 +177,7 @@ public class WriteChannelPage extends JPanel {
 
         @Override
         public void onSuccess(List<File> data) {
+            long endPackTime = System.currentTimeMillis();
             LoadingDialog.getInstance().hide();
             StringBuilder builder = new StringBuilder();
             builder.append(StringsConfig.SUCCESS.PACK_SUCCESS);
@@ -198,6 +202,8 @@ public class WriteChannelPage extends JPanel {
                 builder.append("\n");
             }
             builder.append(StringsConfig.SUCCESS.APK_PATH).append(data.get(0).getParent());
+            builder.append("\n");
+            builder.append(StringsConfig.SUCCESS.PACK_TIME).append(formatTime(startPackTime, endPackTime));
             DialogUtil.showDialog(builder.toString());
             btnWrite.setEnabled(true);
         }
@@ -208,6 +214,49 @@ public class WriteChannelPage extends JPanel {
             DialogUtil.showDialog(errorMsg);
             btnWrite.setEnabled(true);
         }
+    }
+
+    /**
+     * 格式化时间
+     *
+     * @param statTime 开始时间
+     * @param endTime  结束时间
+     */
+    private String formatTime(long statTime, long endTime) {
+        String timeStr = "";
+        if (endTime > statTime) {
+            long totalTime = endTime - statTime;
+            //毫秒值转换成秒
+            long second = totalTime / 1000;
+            //天
+            long days = second / 86400;
+            second = second % 86400;
+            //时
+            long hours = second / 3600;
+            second = second % 3600;
+            //分
+            long minutes = second / 60;
+            //秒
+            second = second % 60;
+
+            StringBuilder builder = new StringBuilder();
+            if (days != 0) {
+                builder.append(days).append("天");
+            }
+            if (hours != 0) {
+                builder.append(hours).append("时");
+            }
+            if (minutes != 0) {
+                builder.append(minutes).append("分");
+            }
+            if (second != 0) {
+                builder.append(second).append("秒");
+            }
+            timeStr = builder.toString();
+        } else {
+            timeStr = "格式化时间错误";
+        }
+        return timeStr;
     }
 
 

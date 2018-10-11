@@ -19,6 +19,8 @@ public class DataSource {
     private List<String> channelNames;
     //渠道标识符
     private String channelFlag = "ia1";
+    //当前apk是否是V2签名
+    private boolean isV2Signature ;
 
     public static final DataSource getInstance() {
         if (INSTANCE == null) {
@@ -63,4 +65,11 @@ public class DataSource {
         this.channelFlag = channelFlag;
     }
 
+    public boolean isV2Signature() {
+        return isV2Signature;
+    }
+
+    public void setV2Signature(boolean v2Signature) {
+        isV2Signature = v2Signature;
+    }
 }

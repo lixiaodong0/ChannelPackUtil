@@ -43,6 +43,8 @@ public interface StringsConfig {
         String CHANNEL_MARK = "渠道标识：";
 
         String APK_PATH = "Apk路径：";
+
+        String PACK_TIME="总耗时：";
     }
 
 }

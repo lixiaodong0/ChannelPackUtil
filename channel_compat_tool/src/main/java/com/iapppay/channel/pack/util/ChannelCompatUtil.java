@@ -1,5 +1,6 @@
 package com.iapppay.channel.pack.util;
 
+import com.iapppay.channel.pack.data.DataSource;
 import com.iapppay.channel.v2.ChannelInfo;
 import com.iapppay.channel.v2.ChannelReader;
 import com.iapppay.channel.v2.ChannelWriter;
@@ -18,6 +19,27 @@ public class ChannelCompatUtil {
     private ChannelCompatUtil() {
     }
 
+
+    /**
+     * 检查apk是否属于V2签名
+     *
+     * @param apkFile APK文件
+     */
+    public static boolean isV2Signature(File apkFile) {
+        boolean isV2 = false;
+        try {
+            ChannelWriter.put(apkFile, "test");
+            isV2 = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            isV2 = false;
+        } catch (SignatureNotFoundException e) {
+            e.printStackTrace();
+            isV2 = false;
+        }
+        return isV2;
+    }
+
     /**
      * 向apk文件添加渠道标识符
      *
@@ -26,26 +48,22 @@ public class ChannelCompatUtil {
      * @return true 成功 false 失败
      */
     public static boolean put(File apkFile, File toFile, String channel) throws IOException {
-        copyFile(apkFile, toFile);
-        //优先向V2方式输出渠道标识符
         boolean isSuccess = false;
-        try {
-            System.out.println("尝试V2方式添加渠道标识符");
-            ChannelWriter.put(toFile, channel);
-            System.out.println("V2方式『成功』");
-            isSuccess = true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            isSuccess = false;
-        } catch (SignatureNotFoundException e) {
-            e.printStackTrace();
-            isSuccess = false;
-        }
-        //V2方式输出失败，尝试V1方式输出渠道标识符
-        if (!isSuccess) {
-            //先删除V2复制的Apk文件
-            toFile.delete();
-            System.out.println("V2方式『失败』");
+        if (DataSource.getInstance().isV2Signature()) {
+            copyFile(apkFile, toFile);
+            try {
+                //V2方式添加渠道标识符
+                System.out.println("尝试V2方式添加渠道标识符");
+                ChannelWriter.put(toFile, channel);
+                isSuccess = true;
+                System.out.println("V2方式『成功』");
+            } catch (SignatureNotFoundException e) {
+                e.printStackTrace();
+                isSuccess = false;
+                System.out.println("V2方式『失败』");
+            }
+        } else {
+            //V1方式添加渠道标识符
             try {
                 System.out.println("尝试V1方式添加渠道标识符");
                 com.iapppay.channel.v1.ChannelWriter.put(apkFile, toFile, channel);
