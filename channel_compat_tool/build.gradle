@@ -21,7 +21,7 @@ task clearJar(type: Delete) {
 }
 //自定义可运行Jar包任务
 task makeJar(type: Jar) {
-    //配置主类，加入这一行配置才能jar才能运行
+    //配置主类，加入这一行配置jar才能运行
     manifest{
         attributes 'Main-Class': 'com.iapppay.channel.pack.MainClass'
     }
@@ -34,9 +34,9 @@ task makeJar(type: Jar) {
     from('../v1_reader/build/classes/main')
     from('../v1_writer/build/classes/main')
     from('../v2_reader/build/classes/main')
+    //加入第三方依赖的jar包
+    from zipTree('../v2_reader/libs/json-20080701.jar')
     from('../v2_writer/build/classes/main')
-    //打包到jar后的目录结构
-//    into('build/libs')
     //去掉不需要打包的目录和文件
     exclude('**/BuildConfig.class')
 }

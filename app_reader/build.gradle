@@ -37,11 +37,8 @@ task makeJar(type: Jar) {
     // ..代表ChannelPackUtil这个目录
     from('../v1_reader/build/classes/main')
     from('../v2_reader/build/classes/main')
-    //打包到jar后的目录结构
-//    into('build/libs')
     //去掉不需要打包的目录和文件
     exclude('**/BuildConfig.class')
-    exclude('**/META-INF')
 }
 makeJar.dependsOn(clearJar, build)
 
