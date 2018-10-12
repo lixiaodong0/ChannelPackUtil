@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 /**
  * Created by Administrator on 2018/10/12.
  */
-public class Java7FileUtil {
+public class FileUtil {
 
     /**
      * 判断当前java版本号是否 >= 1.7

@@ -65,7 +65,7 @@ public class ChannelUtil {
         if (!TextUtil.isEmpty(s)) {
             callback.onSuccess(s);
         } else {
-            callback.onSuccess(StringsConfig.FAIL.NOT_FOUND_CHANNEL_MARK);
+            callback.onError(StringsConfig.FAIL.NOT_FOUND_CHANNEL_MARK);
         }
     }
 
