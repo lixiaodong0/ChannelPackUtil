@@ -6,7 +6,6 @@ import java.awt.Font;
 
 import javax.swing.UIManager;
 
-
 public class MainClass {
 
     public static void main(String[] args) {

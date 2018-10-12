@@ -24,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
             channel = "渠道标识符读取失败";
         }
         tvChannelMark.setText(channel);
+
+
     }
 
 }

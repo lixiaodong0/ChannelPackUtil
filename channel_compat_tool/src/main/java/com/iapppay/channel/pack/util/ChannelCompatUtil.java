@@ -7,8 +7,6 @@ import com.iapppay.channel.v2.ChannelWriter;
 import com.iapppay.channel.v2.SignatureNotFoundException;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -50,7 +48,7 @@ public class ChannelCompatUtil {
     public static boolean put(File apkFile, File toFile, String channel) throws IOException {
         boolean isSuccess = false;
         if (DataSource.getInstance().isV2Signature()) {
-            copyFile(apkFile, toFile);
+            Java7FileUtil.copyFile(apkFile, toFile);
             try {
                 //V2方式添加渠道标识符
                 System.out.println("尝试V2方式添加渠道标识符");
@@ -66,7 +64,12 @@ public class ChannelCompatUtil {
             //V1方式添加渠道标识符
             try {
                 System.out.println("尝试V1方式添加渠道标识符");
-                com.iapppay.channel.v1.ChannelWriter.put(apkFile, toFile, channel);
+                if (Java7FileUtil.isJava7Version()) {
+                    Java7FileUtil.copyFile(apkFile, toFile);
+                    com.iapppay.channel.v1.ChannelWriter.put(toFile, channel);
+                } else {
+                    com.iapppay.channel.v1.ChannelWriter.put(apkFile, toFile, channel);
+                }
                 isSuccess = true;
                 System.out.println("V1方式『成功』");
             } catch (IOException e) {
@@ -96,25 +99,5 @@ public class ChannelCompatUtil {
             channel = com.iapppay.channel.v1.ChannelReader.get(apkFile);
         }
         return channel;
-    }
-
-    /**
-     * 拷贝zip文件
-     *
-     * @param fromFile 源文件
-     * @param toFile   目标文件
-     * @throws IOException
-     */
-    private static void copyFile(File fromFile, File toFile) throws IOException {
-        FileInputStream is = new FileInputStream(fromFile);
-        FileOutputStream os = new FileOutputStream(toFile);
-        int len = 0;
-        byte[] buf = new byte[1024];
-        while ((len = is.read(buf)) != -1) {
-            os.write(buf, 0, len);
-        }
-        os.flush();
-        os.close();
-        is.close();
     }
 }
