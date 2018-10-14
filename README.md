@@ -31,9 +31,10 @@
 
 2. 选择渠道方式
 
-   单渠道：在渠道标识符输入框填写渠道名称即可
+   - 单渠道：在渠道标识符输入框填写渠道名称即可
 
-   多渠道：创建一个以.properties的文件，文件内容以 key = value 形式配置渠道，如果没有选择渠道文件，将使用默认配置文件 (C:/Users/Administrator/AppData/Local/Temp/iapppay)![](./screenshot/mark_value.png)
+
+   - 多渠道：创建一个以.properties的文件，文件内容以 key = value 形式配置渠道，如果没有选择渠道文件，将使用默认配置文件 (C:/Users/Administrator/AppData/Local/Temp/iapppay)![](./screenshot/mark_value.png)
 
 3. 点击打标按钮
 
@@ -51,14 +52,14 @@
 
 ## 项目模块介绍：
 
-**app**：用于测试读取渠道的demo
-**app_reader**：用于app读取渠道信息工具模块
-**channel_compat_tool**： 渠道工具页面代码
-**v1_write**：V1签名写渠道方式
-**v1_reader**： V1签名读渠道方式
-**v2_writer**：V2签名写渠道方式
-**v2_reader**：V2签名读渠道方式
-**resources**： 存放各个模块的jar包，方便自定义接入
+- **app**：用于测试读取渠道的demo
+- **app_reader**：用于app读取渠道信息工具模块
+- **channel_compat_tool**： 渠道工具页面代码
+- **v1_write**：V1签名写渠道方式
+- **v1_reader**： V1签名读渠道方式
+- **v2_writer**：V2签名写渠道方式
+- **v2_reader**：V2签名读渠道方式
+- **resources**： 存放各个模块的jar包，方便自定义接入
 
 ## 问题：
 
