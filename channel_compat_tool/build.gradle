@@ -16,8 +16,8 @@ tasks.withType(JavaCompile) {
 }
 
 task clearJar(type: Delete) {
-    delete 'build/libs/ChannelCompatTool.jar'
-    delete 'libs/ChannelCompatTool.jar'
+    delete 'build/libs/channel_compat_tool.jar'
+    delete 'libs/channel_compat_tool.jar'
 }
 //自定义可运行Jar包任务
 task makeJar(type: Jar) {
@@ -26,7 +26,7 @@ task makeJar(type: Jar) {
         attributes 'Main-Class': 'com.iapppay.channel.pack.MainClass'
     }
     //指定生成的jar名
-    baseName 'ChannelCompatTool'
+    baseName 'channel_compat_tool'
     //从哪里打包class文件
     from('src/main/java/com/iapppay/channel/pack/util/loading.gif')
     from('build/classes/main')

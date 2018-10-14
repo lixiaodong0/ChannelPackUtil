@@ -26,7 +26,7 @@ public class ChannelCompatUtil {
     public static boolean isV2Signature(File apkFile) {
         boolean isV2 = false;
         try {
-            ChannelWriter.put(apkFile, "test");
+            ChannelWriter.put(apkFile, "");
             isV2 = true;
         } catch (IOException e) {
             e.printStackTrace();

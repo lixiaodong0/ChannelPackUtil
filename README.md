@@ -52,61 +52,72 @@ typora-root-url: screenshot
    多渠道：
 
    	创建一个以.properties的文件，文件内容以 key = value 形式配置渠道
+   	
+   	如果没有选择渠道文件，将使用默认配置文件 (C:/Users/Administrator/AppData/Local/Temp/iapppay)
 
-				![](/mark_value.png)
+   3. 点击打标按钮
 
-		如果没有选择渠道文件，将使用默认配置文件 (C:/Users/Administrator/AppData/Local/Temp/iapppay)
-
-	3. 点击打标按钮
-
-	4. 等候打包完成
+   4. 等候打包完成
 
 读渠道：
 
 	![](/read_channel_page.png)
-
+	
 	如上图所示：
-
+	
 		1.先选择APK路径
-
+	
 		2.点击读取
-
+	
 		3.等候读取成功
 
 ## 项目模块介绍：
 
 	app:  用于测试读取渠道的demo
-
+	
 	app_reader:  用于app读取渠道信息工具模块
-
+	
 	channel_compat_tool:  渠道工具页面代码
-
+	
 	v1_write:  V1签名写渠道方式
-
+	
 	v1_reader: V1签名读渠道方式
-
+	
 	v2_writer: V2签名写渠道方式
-
+	
 	v2_reader:V2签名读渠道方式
-
+	
 	resources： 存放各个模块的jar包，方便自定义接入
 
 ## 问题：
 
 1. 打包速度慢？
 
+   - apk大小会影响打包速度，因为 copy 文件需要时间。
+
+   - 确保使用 JDK>=1.7版本以上， 1.7版本以上就会使用系统版本 copy 文件，效率最高
+
 2. 修改了项目某些模块，如何打 jar 包？
 
-3. 读取原始Apk，为什么会带有 base 渠道标识符？
+   已经针对每个模块都编写了一个 makeJar 任务，任务完成 jar 存放在 模块/build/libs/下面
+
+   - AndroidStudio打开Gradle任务栏方式
+
+   ![](/makeJar.png)
+
+   - 命令行输入 makeJar 任务方式
+
+     ![](/makeJar2.png)
 
 
 ## 参考：
 
 	[美团Android自动化之旅—生成渠道包](https://tech.meituan.com/mt_apk_packaging.html)
-
+	
 	[新一代开源Android渠道包生成工具Walle](https://tech.meituan.com/android_apk_v2-signature_scheme.html)
-
+	
 	[Gradle如何打可运行 jar 包](http://www.itkeyword.com/doc/1064747557401846x246/exporting-jar-file-with-manifest-attribute-in-android-studio)
+
 
 	
 

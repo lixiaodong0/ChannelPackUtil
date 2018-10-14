@@ -22,3 +22,4 @@ task makeJar(type: Jar) {
     //去掉不需要打包的目录和文件
     exclude('**/BuildConfig.class')
 }
+makeJar.dependsOn(clearJar, build)
