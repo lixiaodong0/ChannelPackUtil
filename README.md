@@ -1,9 +1,5 @@
----
-typora-root-url: screenshot
----
-
 # APK多渠道打包工具
-前言：
+## 前言：
 	因公司需求，需求对外提供多渠道打包解决方案，研究友盟和美团方案之后，最终决定以美团的多渠道方案来构建此渠道工具。因为我公司是SDK开发的，接入我们的大部分是游戏开发者，游戏app动辄1G多大小，我们知道app越大每次编译运行就越慢，而友盟方案每次打一个渠道包都需要重新编译然后替换清单文件的自定义的值，所以我们的业务比较适合美团解决方案，无需重新编译。
 
 	友盟:
@@ -36,8 +32,9 @@ typora-root-url: screenshot
 ## 渠道工具使用方式：
 
 写渠道：
+      
 
- 		![](/single_write_channel.png)
+ 		![](screenshot/single_write_channel.png)
 
 ![](/more_write_channel.png)       							
 
