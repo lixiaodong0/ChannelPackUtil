@@ -32,10 +32,6 @@
 ## 渠道工具使用方式：
 
 写渠道：
-      
-
- 		![](./screenshot/single_write_channel.png)
-
 ![](./screenshot/more_write_channel.png)       							
 
 如上图所示：
@@ -57,9 +53,7 @@
    4. 等候打包完成
 
 读渠道：
-
-	![](./screenshot/read_channel_page.png)
-	
+![](./screenshot/read_channel_page.png)  
 	如上图所示：
 	
 		1.先选择APK路径
@@ -99,12 +93,11 @@
    已经针对每个模块都编写了一个 makeJar 任务，任务完成 jar 存放在 模块/build/libs/下面
 
    - AndroidStudio打开Gradle任务栏方式
-
-   ![](./screenshot/makeJar.png)
+![](./screenshot/makejar.png)  
 
    - 命令行输入 makeJar 任务方式
+  ![](./screenshot/makejar2.png)  
 
-     ![](./screenshot/makeJar2.png)
 
 
 ## 参考：
