@@ -25,13 +25,13 @@ dependencies {
     compile project(':v2_reader')
 }
 task clearJar(type: Delete) {
-    delete 'build/libs/getChannel.jar'
-    delete 'libs/getChannel.jar'
+    delete 'build/libs/app_reader_channel.jar'
+    delete 'libs/app_reader_channel.jar'
 }
 //自定义Jar包任务
 task makeJar(type: Jar) {
     //指定生成的jar名
-    baseName 'getChannel'
+    baseName 'app_reader_channel'
     //从哪里打包class文件
     from('build/intermediates/classes/release')
     // ..代表ChannelPackUtil这个目录

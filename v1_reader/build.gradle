@@ -9,3 +9,16 @@ targetCompatibility = "1.7"
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
+task clearJar(type: Delete) {
+    delete 'build/libs/v1_reader.jar'
+    delete 'libs/v1_reader.jar'
+}
+//自定义Jar包任务
+task makeJar(type: Jar) {
+    //指定生成的jar名
+    baseName 'v1_reader'
+    //从哪里打包class文件
+    from('build/classes/main')
+    //去掉不需要打包的目录和文件
+    exclude('**/BuildConfig.class')
+}
