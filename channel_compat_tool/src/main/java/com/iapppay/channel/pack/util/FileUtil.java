@@ -46,6 +46,7 @@ public class FileUtil {
         }
     }
 
+
     public static void copyFile(File fromFile, File toFile) throws IOException {
         if (isJava7Version()) {
             Log.v("java 7 mode copy file ");

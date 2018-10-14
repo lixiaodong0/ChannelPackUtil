@@ -60,6 +60,7 @@ public class ChannelPropertiesUtil {
             } catch (IOException e) {
                 e.printStackTrace();
                 callback.onError(StringsConfig.FAIL.CREATE_CHANNEL_PROPERTIES_FAIL);
+                return;
             }
         } else {
             //选择了渠道配置文件

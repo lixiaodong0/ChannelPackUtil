@@ -66,6 +66,7 @@ public class ReadChannelPage extends JPanel {
                         @Override
                         public void onError(String errorMsg) {
                             DialogUtil.showDialog(errorMsg);
+
                         }
                     });
                 } else {

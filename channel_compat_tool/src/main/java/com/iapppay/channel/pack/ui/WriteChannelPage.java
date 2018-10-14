@@ -150,6 +150,7 @@ public class WriteChannelPage extends JPanel {
 
         @Override
         public void onError(String errorMsg) {
+            LoadingDialog.getInstance().hide();
             DialogUtil.showDialog(errorMsg);
             btnWrite.setEnabled(true);
         }

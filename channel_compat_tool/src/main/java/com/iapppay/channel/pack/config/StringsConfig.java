@@ -15,7 +15,7 @@ public interface StringsConfig {
 
         String NOT_FOUND_CHANNEL_MARK = "读取失败，未找到渠道标识符";
 
-        String CREATE_CHANNEL_PROPERTIES_FAIL = "创建默认渠道配置文件失败";
+        String CREATE_CHANNEL_PROPERTIES_FAIL = "创建默认渠道配置文件失败，请手动创建渠道文件";
 
         String READ_CHANNEL_PROPERTIES_FAIL = "读取配置文件失败，请检查配置文件内容格式是否正确";
 
