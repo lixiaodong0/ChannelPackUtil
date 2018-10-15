@@ -7,11 +7,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 /**
  * Created by Administrator on 2018/10/12.
  */
-public class FileUtil {
+public class FileCompatUtil {
 
     /**
      * 判断当前java版本号是否 >= 1.7
@@ -88,7 +89,11 @@ public class FileUtil {
     private static void java7CopyMode(File fromFile, File toFile) throws IOException {
         Path fromFilePath = Paths.get(fromFile.getAbsolutePath());
         Path toFilePath = Paths.get(toFile.getAbsolutePath());
-        Files.copy(fromFilePath, toFilePath);
+        if (Files.exists(toFilePath)) {
+            Files.copy(fromFilePath, toFilePath, StandardCopyOption.REPLACE_EXISTING);
+        } else {
+            Files.copy(fromFilePath, toFilePath);
+        }
     }
 
 }

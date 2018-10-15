@@ -48,7 +48,7 @@ public class ChannelCompatUtil {
     public static boolean put(File apkFile, File toFile, String channel) throws IOException {
         boolean isSuccess = false;
         if (DataSource.getInstance().isV2Signature()) {
-            FileUtil.copyFile(apkFile, toFile);
+            FileCompatUtil.copyFile(apkFile, toFile);
             try {
                 //V2方式添加渠道标识符
                 System.out.println("尝试V2方式添加渠道标识符");
@@ -64,8 +64,8 @@ public class ChannelCompatUtil {
             //V1方式添加渠道标识符
             try {
                 System.out.println("尝试V1方式添加渠道标识符");
-                if (FileUtil.isJava7Version()) {
-                    FileUtil.copyFile(apkFile, toFile);
+                if (FileCompatUtil.isJava7Version()) {
+                    FileCompatUtil.copyFile(apkFile, toFile);
                     com.iapppay.channel.v1.ChannelWriter.put(toFile, channel);
                 } else {
                     com.iapppay.channel.v1.ChannelWriter.put(apkFile, toFile, channel);
