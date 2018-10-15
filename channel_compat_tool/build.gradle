@@ -34,9 +34,9 @@ task makeJar(type: Jar) {
     from('../v1_reader/build/classes/main')
     from('../v1_writer/build/classes/main')
     from('../v2_reader/build/classes/main')
+    from('../v2_writer/build/classes/main')
     //加入第三方依赖的jar包
     from zipTree('../v2_reader/libs/json-20080701.jar')
-    from('../v2_writer/build/classes/main')
     //去掉不需要打包的目录和文件
     exclude('**/BuildConfig.class')
 }
